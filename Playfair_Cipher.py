@@ -150,6 +150,10 @@ def main():
             encrypted_text = encrypt_playfair(cleaned_plaintext, key)
             print(f"Hasil Enkripsi (Ciphertext): {encrypted_text}")
             print(f"Ciphertext dalam Base64: {to_base64(encrypted_text)}")
+
+            # Simpan hasil ke file
+            output_file = input("Masukkan nama file output untuk menyimpan hasil enkripsi (contoh: hasil_enkripsi.txt): ")
+            write_file(output_file, encrypted_text)
         
         elif choice == '2':
             ciphertext = input("Masukkan ciphertext: ")
@@ -157,6 +161,10 @@ def main():
             decrypted_text = decrypt_playfair(ciphertext, key)
             print(f"Hasil Dekripsi (Plaintext): {decrypted_text}")
             print(f"Plaintext dalam Base64: {to_base64(decrypted_text)}")
+
+            # Simpan hasil ke file
+            output_file = input("Masukkan nama file output untuk menyimpan hasil dekripsi (contoh: hasil_dekripsi.txt): ")
+            write_file(output_file, decrypted_text)
         
         elif choice == '3':
             file_path = input("Masukkan path file untuk dienkripsi: ")
@@ -180,7 +188,7 @@ def main():
                 print(f"Plaintext dalam Base64: {to_base64(decrypted_content)}")
         
         elif choice == '5':
-            os.system('cls')
+            os.system('cls' if os.name == 'nt' else 'clear')
         
         elif choice == '6':
             print("Keluar dari program.")
