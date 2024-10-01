@@ -88,8 +88,16 @@ def main():
             cleaned_plaintext = clean_text(plaintext)
             key = generate_key(cleaned_plaintext, key)
             encrypted_text = encrypt_vigenere(cleaned_plaintext, key)
+
             print(f"Hasil Enkripsi (Ciphertext): {encrypted_text}")
-            print(f"Ciphertext dalam Base64: {to_base64(encrypted_text)}")
+            
+            # Output ciphertext in Base64
+            encrypted_base64 = to_base64(encrypted_text)
+            print(f"Ciphertext dalam Base64: {encrypted_base64}")
+            
+            # Output ciphertext to file
+            output_file = input("Masukkan nama file output (hasil enkripsi, contoh: hasil_enkripsi.txt): ")
+            write_file(output_file, encrypted_text)
 
         elif choice == '2':
             ciphertext = input("Masukkan ciphertext: ")
@@ -101,8 +109,16 @@ def main():
                     print("Key tidak valid! Masukkan key yang hanya terdiri dari huruf tanpa angka atau simbol.")
             key = generate_key(ciphertext, key)
             decrypted_text = decrypt_vigenere(ciphertext, key)
+
             print(f"Hasil Dekripsi (Plaintext): {decrypted_text}")
-            print(f"Plaintext dalam Base64: {to_base64(decrypted_text)}")
+            
+            # Output plaintext in Base64
+            decrypted_base64 = to_base64(decrypted_text)
+            print(f"Plaintext dalam Base64: {decrypted_base64}")
+            
+            # Output plaintext to file
+            output_file = input("Masukkan nama file output (hasil dekripsi, contoh: hasil_dekripsi.txt): ")
+            write_file(output_file, decrypted_text)
 
         elif choice == '3':
             file_path = input("Masukkan path file untuk dienkripsi: ")
