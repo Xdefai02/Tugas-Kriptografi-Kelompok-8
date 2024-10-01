@@ -119,8 +119,15 @@ def validate_key_length(key):
         print("Invalid Key! Panjang kunci harus merupakan kuadrat sempurna (4 atau 9 huruf).")
         exit(None)
     return math.floor(n)
+
+# Fungsi untuk menyimpan teks ke file
+def write_to_file(file_name, content):
+    with open(file_name + ".txt", 'w') as file:  # Pastikan file berformat .txt
+        file.write(content)
+    print(f"Hasil telah disimpan ke {file_name}.txt")
+
 def main():
-    print("\nVigenère Cipher Encryption and Decryption\n")
+    print("\nHill Cipher Encryption and Decryption\n")
     while True:
         # Menu pilihan
         print("Pilih mode:")
@@ -142,11 +149,19 @@ def main():
             print("CipherText:", cipher_text)
             print("CipherText dalam Base64:", cipher_text_base64)
 
+            # Simpan hasil enkripsi ke file .txt
+            file_name = input("Masukkan nama file untuk menyimpan hasil enkripsi (contoh: hasil_enkripsi): ")
+            write_to_file(file_name, cipher_text)
+
         elif choice == '2':
             # Dekripsi teks
             cipher_text = input("Masukkan CipherText normal: ").lower()
             plain_text = decrypt_text(key, cipher_text)
             print("PlainText:", plain_text)
+
+            # Simpan hasil dekripsi ke file .txt
+            file_name = input("Masukkan nama file untuk menyimpan hasil dekripsi (contoh: hasil_dekripsi): ")
+            write_to_file(file_name, plain_text)
 
         elif choice == '3':
             # Enkripsi file
@@ -161,7 +176,7 @@ def main():
             print(f"File didekripsi dan disimpan sebagai {file_path.replace('.enc', '.dec')}")
 
         elif choice == '5':
-            os.system('cls')
+            os.system('cls' if os.name == 'nt' else 'clear')
 
         elif choice == '6':
             print("Keluar dari program.")
