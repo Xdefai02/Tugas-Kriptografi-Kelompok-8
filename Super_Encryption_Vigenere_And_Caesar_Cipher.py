@@ -98,6 +98,7 @@ def main():
         choice = input("Pilih opsi (1/2/3/4/5/6): ")
 
         if choice == '1':
+            # Enkripsi teks
             plaintext = input("Masukkan plaintext: ")
             while True:
                 key = input("Masukkan key Vigenère: ")
@@ -120,7 +121,12 @@ def main():
             print(f"Hasil Enkripsi (Vigenère + Caesar): {encrypted_caesar}")
             print(f"Ciphertext dalam Base64: {to_base64(encrypted_caesar)}")
 
+            # Simpan hasil enkripsi ke file txt
+            output_file = input("Masukkan nama file output untuk hasil enkripsi (contoh: hasil_enkripsi.txt): ")
+            write_file(output_file, encrypted_caesar)
+
         elif choice == '2':
+            # Dekripsi teks
             ciphertext = input("Masukkan ciphertext: ")
             while True:
                 key = input("Masukkan key Vigenère: ")
@@ -140,7 +146,12 @@ def main():
             print(f"Hasil Dekripsi (Plaintext): {decrypted_vigenere}")
             print(f"Plaintext dalam Base64: {to_base64(decrypted_vigenere)}")
 
+            # Simpan hasil dekripsi ke file txt
+            output_file = input("Masukkan nama file output untuk hasil dekripsi (contoh: hasil_dekripsi.txt): ")
+            write_file(output_file, decrypted_vigenere)
+
         elif choice == '3':
+            # Enkripsi file
             file_path = input("Masukkan path file untuk dienkripsi: ")
             file_content = read_file(file_path)
             if file_content:
@@ -161,11 +172,12 @@ def main():
                 caesar_shift = int(input("Masukkan pergeseran Caesar Cipher (0-25): "))
                 encrypted_caesar = encrypt_caesar(encrypted_vigenere, caesar_shift)
 
-                output_file = input("Masukkan nama file output (hasil enkripsi): ")
+                output_file = input("Masukkan nama file output untuk hasil enkripsi (contoh: hasil_enkripsi.txt): ")
                 write_file(output_file, encrypted_caesar)
                 print(f"Ciphertext dalam Base64: {to_base64(encrypted_caesar)}")
 
         elif choice == '4':
+            # Dekripsi file
             file_path = input("Masukkan path file untuk didekripsi: ")
             file_content = read_file(file_path)
             if file_content:
@@ -184,7 +196,7 @@ def main():
                 key = generate_key(decrypted_caesar, key)
                 decrypted_vigenere = decrypt_vigenere(decrypted_caesar, key)
 
-                output_file = input("Masukkan nama file output (hasil dekripsi): ")
+                output_file = input("Masukkan nama file output untuk hasil dekripsi (contoh: hasil_dekripsi.txt): ")
                 write_file(output_file, decrypted_vigenere)
                 print(f"Plaintext dalam Base64: {to_base64(decrypted_vigenere)}")
 
