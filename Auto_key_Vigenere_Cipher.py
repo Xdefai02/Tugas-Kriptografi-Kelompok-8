@@ -3,11 +3,9 @@ import os
 import base64
 
 def generate_auto_key(text, key):
-    key = list(key)
-    # Tambahkan plaintext setelah key selesai
-    for i in range(len(key), len(text)):
-        key.append(text[i - len(key)])
-    return "".join(key)
+    # Perluas key menggunakan plaintext untuk auto-key
+    key = key + text[:len(text) - len(key)]
+    return key
 
 def clean_text(text):
     # Hapus semua karakter selain huruf (a-z, A-Z) dan ubah huruf kapital menjadi kecil
@@ -38,7 +36,7 @@ def decrypt_auto_key_vigenere(ciphertext, key):
             shift = ord(key[i].lower()) - ord('a')
             decrypted_char = chr((ord(char) - ord('a') - shift + 26) % 26 + ord('a'))
             plaintext.append(decrypted_char)
-            # Key diperpanjang dengan plaintext yang terdekripsi
+            # Untuk auto-key, tambahkan karakter yang baru didekripsi ke dalam kunci
             key += decrypted_char
     return "".join(plaintext)
 
@@ -66,9 +64,9 @@ def write_file(file_path, content):
     print(f"Hasil telah disimpan ke: {file_path}")
 
 def main():
-    print("Auto-Key Vigenère Cipher Encryption and Decryption")
+    print("\nAuto-Key Vigenère Cipher Encryption and Decryption\n")
     while True:
-        print("\n1. Enkripsi Teks")
+        print("1. Enkripsi Teks")
         print("2. Dekripsi Teks")
         print("3. Enkripsi File")
         print("4. Dekripsi File")
@@ -88,8 +86,16 @@ def main():
             cleaned_plaintext = clean_text(plaintext)
             key = generate_auto_key(cleaned_plaintext, key)
             encrypted_text = encrypt_auto_key_vigenere(cleaned_plaintext, key)
+
             print(f"Hasil Enkripsi (Ciphertext): {encrypted_text}")
-            print(f"Ciphertext dalam Base64: {to_base64(encrypted_text)}")
+            
+            # Output ciphertext in Base64
+            encrypted_base64 = to_base64(encrypted_text)
+            print(f"Ciphertext dalam Base64: {encrypted_base64}")
+            
+            # Output ciphertext to file
+            output_file = input("Masukkan nama file output (hasil enkripsi, contoh: hasil_enkripsi.txt): ")
+            write_file(output_file, encrypted_text)
 
         elif choice == '2':
             ciphertext = input("Masukkan ciphertext: ")
@@ -100,8 +106,16 @@ def main():
                 else:
                     print("Key tidak valid! Masukkan key yang hanya terdiri dari huruf tanpa angka atau simbol.")
             decrypted_text = decrypt_auto_key_vigenere(ciphertext, key)
+
             print(f"Hasil Dekripsi (Plaintext): {decrypted_text}")
-            print(f"Plaintext dalam Base64: {to_base64(decrypted_text)}")
+            
+            # Output plaintext in Base64
+            decrypted_base64 = to_base64(decrypted_text)
+            print(f"Plaintext dalam Base64: {decrypted_base64}")
+            
+            # Output plaintext to file
+            output_file = input("Masukkan nama file output (hasil dekripsi, contoh: hasil_dekripsi.txt): ")
+            write_file(output_file, decrypted_text)
 
         elif choice == '3':
             file_path = input("Masukkan path file untuk dienkripsi: ")
